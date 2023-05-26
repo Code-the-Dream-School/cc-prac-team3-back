@@ -8,7 +8,7 @@ const {
 	getAllProducts,
 	updateProduct,
 	getProduct,
-} = require('../controllers/tasks')
+} = require('../controllers/products')
 
 router.route('/').post(createProduct).get(getAllProducts)
 
