@@ -4,7 +4,10 @@ const cors = require('cors')
 const favicon = require('express-favicon');
 const logger = require('morgan');
 
-const mainRouter = require('./routes/mainRouter.js');
+//routers
+const mainRouter = require('./routes/mainRouter.js'); // <---- Do we keep this route?
+const authRouter = require('./routes/auth')
+
 
 // middleware
 app.use(cors());
@@ -16,5 +19,6 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // routes
 app.use('/api/v1', mainRouter);
+app.use('/api/v1/auth', authRouter) // <--- authentication for Register and Login 
 
 module.exports = app;
