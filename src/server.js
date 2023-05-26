@@ -1,4 +1,3 @@
-// const { PORT = 3000 } = process.env.MONGO_URI;
 const app = require("./app");
 
 const connectDB = require('../db/connect')
