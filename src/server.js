@@ -1,4 +1,4 @@
-const { PORT = 8000 } = process.env;
+const { PORT = 8000 } = process.env.MONGO_URI;
 const app = require("./app");
 
 const connectDB = require('../db/connect')
