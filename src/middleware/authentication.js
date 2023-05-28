@@ -1,3 +1,4 @@
+const { UnauthenticatedError } = require('../errors')
 
 const authMiddleware = async (req, res, next)=>{
     //check header
