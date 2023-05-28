@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
             required: [true, 'Please provide password'],
             minlength: 6,
           },
-          number: {
+          phoneNumber: {
             type: String, 
             minlength:10,
             maxlength:10,
