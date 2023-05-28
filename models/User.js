@@ -1,5 +1,4 @@
-
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
         name: {
@@ -30,21 +29,7 @@ const UserSchema = new mongoose.Schema({
           streetAddress: {
             type: String, 
             required: [true, 'Please provide street address'],
+		  }
+		})
 
-          },
-          city : {
-            type: String, 
-            required: [true, 'Please prove city'],
-          },
-          state : {
-            type: String, 
-            required: [true, 'Please prove state'],
-          },
-          userType: {
-            type: String,
-            enum: ['buyer', 'seller'],
-          },  
-    
-    })
-
-module.exports = mongoose.model.('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)
