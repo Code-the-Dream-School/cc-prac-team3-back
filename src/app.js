@@ -26,7 +26,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // routes
 app.use('/api/v1', mainRouter);
-app.use('/api/v1/auth', authenticateUser, authRouter); 
+app.use('/api/v1/auth', authRouter); 
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware); 
