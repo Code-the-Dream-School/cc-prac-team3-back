@@ -16,20 +16,21 @@ const UserSchema = new mongoose.Schema({
             ],
             unique: true,
           },
-          password:{
+        password:{
             type: String, 
             required: [true, 'Please provide password'],
             minlength: 6,
           },
-          phoneNumber: {
+        phoneNumber: {
             type: String, 
             minlength:10,
             maxlength:10,
           },
-          streetAddress: {
+        streetAddress: {
             type: String, 
             required: [true, 'Please provide street address'],
 		  }
 		})
+
 
 module.exports = mongoose.model('User', UserSchema)
