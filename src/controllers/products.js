@@ -9,11 +9,18 @@ const createProduct = async (req, res)=>{
 
 //my goal is that this shows all products so that shoppers can view what others have posted. Should we filter this by location?
 const getAllProducts = async (req, res)=>{
+    try{
     const products = await Product.find({}).sort('createdAt')
     res.status(StatusCodes.OK).json({products, count:products.length})
+    }catch{
+        if (!products){
+            throw new NotFoundError ('No products found')
+        }
+    }
 }
 
 const 	getProductsBySearch = async (req, res) =>{
+  try{  
     const req = req.body
     const search = {$text:{$search:req}}
 
@@ -29,12 +36,13 @@ const 	getProductsBySearch = async (req, res) =>{
 
     }
 
-    const findProducts = Product.find(search).project(projection); 
-
+    const findProducts = Product.find(search).project(projection);
+    res.status(StatusCodes.OK).json({findProducts})
+} catch {
     if (!findProducts){
         throw new NotFoundError ('No products match your search')
     }
-    res.status(StatusCodes.OK).json({findProducts})
+}
 }
 
 
