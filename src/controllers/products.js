@@ -1,11 +1,9 @@
-const Product = require('../models/Product');
-const {statusCodes}= require('http-status-codes');
+const Product = require('../../models/Product');
+const {StatusCodes}= require('http-status-codes');
 const {BadRequestError, NotFoundError} = require('../errors');
 const { query } = require('express');
 
-const createProduct = async (req, res)=>{
-    console.log ("create product")
-}
+
 
 //my goal is that this shows all products so that shoppers can view what others have posted. Should we filter this by location?
 const getAllProducts = async (req, res)=>{
@@ -45,6 +43,11 @@ const 	getProductsBySearch = async (req, res) =>{
 }
 }
 
+const createProduct = async (req, res)=>{
+    req.body.createdBy = req.user.userId
+    const product = await Product.create(req.body)
+    res.status(StatusCodes.CREATED).json({ product })
+}
 
 const getProductsByFilter = async (req, res) =>{
     //going to use query params here I think. 
