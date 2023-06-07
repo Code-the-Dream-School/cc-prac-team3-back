@@ -5,7 +5,7 @@ const { login, register, forgotPassword, resetPassword} = require('../controller
 router.post('/register', register)
 router.post('/login', login)
 router.post('/forgot-password', forgotPassword)
-router.get('/reset-password/:id/:token', resetPassword)
+router.get('/reset-password/:id/:token', resetPassword) //delete this in next push
 router.post('/reset-password/:id/:token', resetPassword)
 
 

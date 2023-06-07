@@ -18,13 +18,12 @@ const UserSchema = new mongoose.Schema({
             ],
             unique: true,
           },
-
-        password:{
+          password:{
             type: String, 
             required: [true, 'Please provide password'],
             minlength: 6,
           },
-        phoneNumber: {
+          phoneNumber: {
             type: String, 
             minlength:10,
             maxlength:10,
@@ -68,6 +67,5 @@ const UserSchema = new mongoose.Schema({
       const isMatch = await bcrypt.compare(canditatePassword, this.password)
       return isMatch
     }
-
 
 module.exports = mongoose.model('User', UserSchema)
