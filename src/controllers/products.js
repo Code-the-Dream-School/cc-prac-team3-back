@@ -8,7 +8,6 @@ const createProduct = async (req, res) => {
 	const product = await Product.create(req.body)
 	res.status(StatusCodes.CREATED).json({ product })
 }
-
 //my goal is that this shows all products so that shoppers can view what others have posted. Should we filter this by location?
 
 const getAllProducts = async (req, res) => {
