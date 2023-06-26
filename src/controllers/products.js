@@ -3,11 +3,7 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 const { query } = require('express')
 
-const createProduct = async (req, res) => {
-	req.body.createdBy = req.user.userId
-	const product = await Product.create(req.body)
-	res.status(StatusCodes.CREATED).json({ product })
-}
+
 //my goal is that this shows all products so that shoppers can view what others have posted. Should we filter this by location?
 
 const getAllProducts = async (req, res) => {
@@ -21,7 +17,7 @@ const getAllProducts = async (req, res) => {
 	} catch (error) {
 		console.log(error)
 	}
-}
+} 
 
 const getProductsBySearch = async (req, res) => {
 	try {
@@ -48,8 +44,8 @@ const getProductsBySearch = async (req, res) => {
 	}
 }
 
-const getProductsByFilter = async (req, res) => {
-	//going to use query params here I think.
+const getProductsByFilter = async (req, res) =>{
+    //going to use query params here I think. 
 }
 
 const getProduct = async (req, res) => {
@@ -71,7 +67,18 @@ const getProduct = async (req, res) => {
 	} catch (error) {
 		console.log(error)
 	}
+} 
+   
+const createProduct = async (req, res) => {
+	
+	req.body.createdBy = req.user.userId
+	req.body.productImage = req.file.path
+
+	const product = await Product.create(req.body)
+	res.status(StatusCodes.CREATED).json({product})
 }
+
+
 
 const updateProduct = async (req, res) => {
 	try {
@@ -103,6 +110,7 @@ const updateProduct = async (req, res) => {
 		console.log(error)
 	}
 }
+
 const deleteProduct = async (req, res) => {
 	try {
 		const {
@@ -131,4 +139,5 @@ module.exports = {
 	getProduct,
 	getProductsBySearch,
 	getProductsByFilter,
+	
 }

@@ -1,5 +1,5 @@
 const express = require('express')
-const { register } = require('../controllers/auth')
+//const { register } = require('../controllers/auth')
 const router = express.Router()
 
 const {
@@ -11,6 +11,7 @@ const {
 	getProductsBySearch,
 	getProductsByFilter,
 } = require('../controllers/products')
+
 
 router.route('/').post(createProduct).get(getAllProducts)
 

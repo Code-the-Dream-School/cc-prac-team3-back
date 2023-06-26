@@ -10,7 +10,7 @@ const {
 router.post('/register', register)
 router.post('/login', login)
 router.post('/forgot-password', forgotPassword)
-router.get('/reset-password/:id/:token', resetPassword) //delete this in next push
+router.get('/reset-password/:id/:token', resetPassword) 
 router.post('/reset-password/:id/:token', resetPassword)
 
 module.exports = router
