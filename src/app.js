@@ -29,7 +29,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use('/api/v1', mainRouter);
 app.use('/api/v1/auth', authRouter); 
 app.use('/api/v1/products', authenticateUser, productRouter)
-app.use('/api/v1/search', authenticateUser, searchRouter)
+app.use('/api/v1/search', searchRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware); 

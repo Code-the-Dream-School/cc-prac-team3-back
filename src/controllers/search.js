@@ -1,35 +1,22 @@
 const Product = require('../../models/Product')
-//const mongosh = require('mongosh')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
-const { query } = require('express')
+//const { query } = require('express')
+//const { search } = require('../routes/search')
 
 const getProductsBySearch = async (req, res) => {
-	try {
-		const req = req.params.text
-
-		console.log(req)
+		const search = req.params.text
 		
-		const query = { $text: { $search: req } }
+		const query =  {productName:{$regex: search, $options:'i'}}
 
-		const projection = {
-			_id: 0,
-			productName: 1,
-			category: 1,
-			description: 1,
+		const findProducts =  await Product.find(query)
+		
+		if (findProducts.length === 0){
+			throw new NotFoundError(`No products match your search: ${search}`)
 		}
 
-		const findProducts = Product.find(query).project(projection)
-		
-		if (!findProducts){
-			throw new NotFoundError('No products match your search')
-		}
+		res.status(StatusCodes.OK).json({findProducts})
 
-		res.status(StatusCodes.OK).json({ findProducts })
-	} catch {
-	    throw new BadRequestError('bad request')
-	}
-	
 }
 
 const getProductsByCategory = async (req, res) => {
