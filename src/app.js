@@ -14,8 +14,8 @@ const authenticateUser = require('./middleware/authentication');
 //routers
 const mainRouter = require('./routes/mainRouter.js');
 const authRouter = require('./routes/auth');
-const productRouter = require('./routes/products');
-//const orderRouter = require('./routes/orders');
+const productRouter = require('./routes/products')
+const orderRouter = require('./routes/order')
 
 
 //error handler
@@ -34,9 +34,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 // routes
 app.use('/api/v1', mainRouter);
 app.use('/api/v1/auth', authRouter); 
-app.use('/api/v1/products', authenticateUser,  upload.single('productImage'),productRouter);
-//app.use('/api/v1/orders', orderRouter);
-
+app.use('/api/v1/products', authenticateUser, productRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware); 
