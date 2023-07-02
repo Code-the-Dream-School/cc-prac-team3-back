@@ -11,6 +11,8 @@ const mainRouter = require('./routes/mainRouter.js');
 const authRouter = require('./routes/auth');
 const productRouter = require('./routes/products');
 const searchRouter= require('./routes/search');
+const orderRouter = require('./routes/order')
+
 
 
 //error handler
@@ -30,6 +32,7 @@ app.use('/api/v1', mainRouter);
 app.use('/api/v1/auth', authRouter); 
 app.use('/api/v1/products', authenticateUser, productRouter)
 app.use('/api/v1/search', searchRouter)
+app.use('/api/v1/order', authenticateUser, orderRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware); 
