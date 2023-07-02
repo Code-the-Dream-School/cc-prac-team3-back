@@ -23,35 +23,6 @@ const getAllProducts = async (req, res) => {
 	}
 }
 
-const getProductsBySearch = async (req, res) => {
-	try {
-		const req = req.body
-		const search = { $text: { $search: req } }
-
-		const projection = {
-			_id: 1,
-			productName: 1,
-			category: 1,
-			description: 1,
-			condition: 1,
-			price: 1,
-			createdBy: 1,
-			date_added: 1,
-		}
-
-		const findProducts = Product.find(search).project(projection)
-		res.status(StatusCodes.OK).json({ findProducts })
-	} catch {
-		if (!findProducts) {
-			throw new NotFoundError('No products match your search')
-		}
-	}
-}
-
-const getProductsByFilter = async (req, res) => {
-	//going to use query params here I think.
-}
-
 const getProduct = async (req, res) => {
 	try {
 		const {
@@ -129,6 +100,4 @@ module.exports = {
 	getAllProducts,
 	updateProduct,
 	getProduct,
-	getProductsBySearch,
-	getProductsByFilter,
 }
