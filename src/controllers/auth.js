@@ -3,36 +3,53 @@ require('dotenv').config()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../../models/User')
-const { StatusCodes } = require('http-status-codes')
+const { StatusCodes} = require('http-status-codes')
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 const transporter = require('../middleware/email')
 
 const register = async (req, res) => {
-	//double check model name
-	const user = await User.create({ ...req.body })
-	const token = user.createJWT()
+	console.log('inside register route')//troublehsooting
 
-	//change to status codes when adding err handler
-	res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
+	const { email } = req.body
+
+	console.log(email) //troublehsooting
+	
+	let user = await User.findOne({ email })      
+	
+	console.log(user) //troublehsooting
+
+	if(!user){
+		user = await User.create({ ...req.body })
+		const token = user.createJWT()                                               
+		//change to status codes when adding err handler
+		res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token })
+		console.log("no user") //troublehsooting
+	} else {
+		console.log('send the error') //troublehsooting
+		return new BadRequestError('User with that email already exists');
+	}
+	
+
+	
 }
 
 const login = async (req, res) => {
 	const { email, password } = req.body
 
 	if (!email || !password) {
-		throw new BadRequestError('Please provide email and password')
+		return new BadRequestError('Please provide email and password')
 	}
 
 	const user = await User.findOne({ email })
 
 	if (!user) {
-		throw new UnauthenticatedError('Invalid Credentials')
+		return new UnauthenticatedError('Invalid Credentials')
 	}
 
 	const isPasswordCorrect = await user.comparePassword(password)
 
 	if (!isPasswordCorrect) {
-		throw new UnauthenticatedError('Invalid Credentials')
+		return new UnauthenticatedError('Invalid Credentials')
 	}
 
 	const token = user.createJWT()
@@ -74,7 +91,7 @@ const forgotPassword = async (req, res) => {
 	//console.log(user)
 
 	if (!user) {
-		throw new UnauthenticatedError('User with this email does not exist')
+		return new UnauthenticatedError('User with this email does not exist')
 	}
 
 	const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {

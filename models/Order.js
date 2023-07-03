@@ -19,12 +19,12 @@ const OrderSchema = new mongoose.Schema(
 			required: [true, 'Please provide product'],
 		},
 
-		Buyer: {
+		buyer: {
 			type: mongoose.Types.ObjectId,
             ref: User,
             
 		},
-		Seller: {
+		seller: {
 			type: mongoose.Types.ObjectId,
 			ref: User,
         },
