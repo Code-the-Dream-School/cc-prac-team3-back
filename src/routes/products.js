@@ -1,5 +1,6 @@
 const express = require('express')
 const { register } = require('../controllers/auth')
+const authenticateUser = require('../middleware/authentication')
 const router = express.Router()
 
 const {
@@ -10,8 +11,8 @@ const {
 	getProduct,
 } = require('../controllers/products')
 
-router.route('/').post(createProduct).get(getAllProducts)
+router.route('/').post(authenticateUser, createProduct).get(getAllProducts)
 
-router.route('/:id').get(getProduct).delete(deleteProduct).patch(updateProduct)
+router.route('/:id').get(getProduct).delete(authenticateUser,deleteProduct).patch(authenticateUser, updateProduct)
 
 module.exports = router
