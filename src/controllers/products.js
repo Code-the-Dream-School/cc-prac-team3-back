@@ -22,9 +22,11 @@ const getAllProducts = async (req, res) => {
 
 //gets all products from particular
 const getProducts = async (req, res) => {
+	const {user} = req.body
+	
 	try {
-		console.log(req.user.userId)
-		const products = await Product.find({createdBy: req.user.userId}).sort('createdAt')
+		
+		const products = await Product.find({createdBy: user}).sort('createdAt')
 		res.status(StatusCodes.OK).json({ products, count: products.length })
 
 		if (!products) {
