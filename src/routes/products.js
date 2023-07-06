@@ -6,6 +6,7 @@ const {
 	createProduct,
 	deleteProduct,
 	getAllProducts,
+	getProducts,
 	updateProduct,
 	getProduct,
 	getProductsBySearch,
@@ -14,6 +15,7 @@ const {
 
 
 router.route('/').post(createProduct).get(getAllProducts)
+router.route('/get-products').get(getProducts)
 
 router.route('/:id').get(getProduct).delete(deleteProduct).patch(updateProduct)
 
