@@ -6,13 +6,31 @@ const { query } = require('express')
 
 //my goal is that this shows all products so that shoppers can view what others have posted. Should we filter this by location?
 
+//gets all products from all users 
 const getAllProducts = async (req, res) => {
 	try {
 		const products = await Product.find({}).sort('createdAt')
 		res.status(StatusCodes.OK).json({ products, count: products.length })
 
 		if (!products) {
-			throw new NotFoundError('No products found')
+			return new NotFoundError('No products found')
+		}
+	} catch (error) {
+		console.log(error)
+	}
+} 
+
+//gets all products from particular
+const getProducts = async (req, res) => {
+	const {user} = req.body
+	
+	try {
+		
+		const products = await Product.find({createdBy: user}).sort('createdAt')
+		res.status(StatusCodes.OK).json({ products, count: products.length })
+
+		if (!products) {
+			return new NotFoundError('No products found')
 		}
 	} catch (error) {
 		console.log(error)
@@ -135,6 +153,7 @@ module.exports = {
 	createProduct,
 	deleteProduct,
 	getAllProducts,
+	getProducts, 
 	updateProduct,
 	getProduct,
 	getProductsBySearch,
