@@ -1,5 +1,6 @@
 const Order = require('../../models/Order')
 
+
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
@@ -52,6 +53,7 @@ const createOrder = async (req, res) => {
 	})
 
 
+
 }
 
 const getOrder = async (req, res) => {
@@ -89,7 +91,9 @@ const updateOrder = async (req, res) => {
 		Buyer === '' ||
 		Seller === ''
 	) {
+
 		res.status(400).json({'Please fill in all fields.'})
+
 	}
 	const order = await Order.findByIdAndUpdate(
 		{ _id: orderId, createdBy: userId },
@@ -97,7 +101,9 @@ const updateOrder = async (req, res) => {
 		{ new: true, runValidators: true }
 	)
 	if (!order) {
+
 		res.status(400).json({`No item with id ${orderId}`})
+
 	}
 	res.status(StatusCodes.OK).json({ order })
 }
