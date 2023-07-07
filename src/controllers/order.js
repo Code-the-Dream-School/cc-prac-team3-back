@@ -18,7 +18,11 @@ const getOrder = async (req, res) => {
 		createdBy: userId,
 	})
 	if (!order) {
-		throw new NotFoundError(`No product with id ${orderId}`)
+
+		return res
+			.status(StatusCodes.BAD_REQUEST)
+			.json(new NotFoundError(`No product with id ${orderId}`))
+
 	}
 	res.status(StatusCodes.OK).json({ order })
 }
@@ -43,7 +47,9 @@ const updateOrder = async (req, res) => {
 		Buyer === '' ||
 		Seller === ''
 	) {
-		throw new BadRequestError('Please fill in all fields.')
+
+		return res.status(StatusCodes.BAD_REQUEST).json(new NotFoundError('Please fill in all fields.'))
+
 	}
 	const order = await Order.findByIdAndUpdate(
 		{ _id: orderId, createdBy: userId },
@@ -51,7 +57,9 @@ const updateOrder = async (req, res) => {
 		{ new: true, runValidators: true }
 	)
 	if (!order) {
-		throw new NotFoundError(`No item with id ${orderId}`)
+
+		return res.status(StatusCodes.BAD_REQUEST).json(new NotFoundError(`No item with id ${orderId}`))
+
 	}
 	res.status(StatusCodes.OK).json({ order })
 }
