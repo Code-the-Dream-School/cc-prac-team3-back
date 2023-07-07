@@ -14,7 +14,9 @@ const getAllProducts = async (req, res) => {
 
 		if (!products) {
 
+
 			res.status(StatusCodes.NOT_FOUND).json(new Error('No products found'))
+
 
 		}
 	} catch (error) {
@@ -38,6 +40,7 @@ const getProducts = async (req, res) => {
 		console.log(error)
 	}
 } 
+
 
 
 const getProductsBySearch = async (req, res) => {
@@ -65,9 +68,6 @@ const getProductsBySearch = async (req, res) => {
 	}
 }
 
-const getProductsByFilter = async (req, res) =>{
-    //going to use query params here I think. 
-}
 
 const getProduct = async (req, res) => {
 	try {
@@ -161,7 +161,8 @@ module.exports = {
 	getProducts, 
 	updateProduct,
 	getProduct,
+
 	getProductsBySearch,
-	getProductsByFilter,
+	
 
 }

@@ -1,6 +1,5 @@
 const Order = require('../../models/Order')
 
-
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
@@ -66,7 +65,13 @@ const getOrder = async (req, res) => {
 		createdBy: userId,
 	})
 	if (!order) {
-		throw new NotFoundError(`No product with id ${orderId}`)
+
+
+		return res
+			.status(StatusCodes.BAD_REQUEST)
+			.json(new NotFoundError(`No product with id ${orderId}`))
+
+
 	}
 	res.status(StatusCodes.OK).json({ order })
 }
@@ -92,7 +97,9 @@ const updateOrder = async (req, res) => {
 		Seller === ''
 	) {
 
-		res.status(400).json({'Please fill in all fields.'})
+
+		return res.status(StatusCodes.BAD_REQUEST).json(new NotFoundError('Please fill in all fields.'))
+
 
 	}
 	const order = await Order.findByIdAndUpdate(
@@ -102,7 +109,9 @@ const updateOrder = async (req, res) => {
 	)
 	if (!order) {
 
-		res.status(400).json({`No item with id ${orderId}`})
+
+		return res.status(StatusCodes.BAD_REQUEST).json(new NotFoundError(`No item with id ${orderId}`))
+
 
 	}
 	res.status(StatusCodes.OK).json({ order })

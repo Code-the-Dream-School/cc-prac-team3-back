@@ -8,6 +8,7 @@ const {
 
 router.route('/:text').get(getProductsBySearch)
 
+
 router.route('/:category').get(getProductsByCategory)
 
 module.exports = router

@@ -19,12 +19,17 @@ const OrderSchema = new mongoose.Schema(
 			required: [true, 'Please provide product'],
 		},
 
+
 		buyer: {
+
 			type: mongoose.Types.ObjectId,
             ref: User,
             
 		},
+
+
 		seller: {
+
 			type: mongoose.Types.ObjectId,
 			ref: User,
         },
