@@ -17,6 +17,7 @@ const authMiddleware = async (req, res, next) => {
 	} catch (error) {
 		return new UnauthenticatedError('authentication invalid')
 	}
+
 }
 
 module.exports = authMiddleware

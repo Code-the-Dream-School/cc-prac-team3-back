@@ -6,6 +6,10 @@ const ProductSchema = new mongoose.Schema(
 			type: String,
 			required: [true, 'Please provide product name'],
 		},
+		productImage : {
+			type: String, 
+			required: true,
+			}, 
 		category: {
 			type: String,
 			enum: [
