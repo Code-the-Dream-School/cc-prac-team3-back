@@ -1,8 +1,16 @@
 const Order = require('../../models/Order')
-const User = require('../../models/User')
-const Product = require('../../models/Product')
+
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
+
+const createOrder = async (req, res) => {
+	req.body.createdBy = req.user.userId
+	const order = await Order.create(req.body)
+	res.status(StatusCodes.CREATED).json({ order })
+
+const User = require('../../models/User')
+const Product = require('../../models/Product')
+
 
 require('dotenv').config() //needed to read values for email config 
 const transporter = require('../middleware/email')
@@ -43,6 +51,7 @@ const createOrder = async (req, res) => {
 		}
 	})
 
+
 }
 
 const getOrder = async (req, res) => {
@@ -80,7 +89,7 @@ const updateOrder = async (req, res) => {
 		Buyer === '' ||
 		Seller === ''
 	) {
-		throw new BadRequestError('Please fill in all fields.')
+		res.status(400).json({'Please fill in all fields.'})
 	}
 	const order = await Order.findByIdAndUpdate(
 		{ _id: orderId, createdBy: userId },
@@ -88,7 +97,7 @@ const updateOrder = async (req, res) => {
 		{ new: true, runValidators: true }
 	)
 	if (!order) {
-		throw new NotFoundError(`No item with id ${orderId}`)
+		res.status(400).json({`No item with id ${orderId}`})
 	}
 	res.status(StatusCodes.OK).json({ order })
 }

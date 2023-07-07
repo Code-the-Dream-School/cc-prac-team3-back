@@ -13,7 +13,9 @@ const getAllProducts = async (req, res) => {
 		res.status(StatusCodes.OK).json({ products, count: products.length })
 
 		if (!products) {
-			return new NotFoundError('No products found')
+
+			res.status(StatusCodes.NOT_FOUND).json(new Error('No products found'))
+
 		}
 	} catch (error) {
 		console.log(error)
@@ -36,6 +38,7 @@ const getProducts = async (req, res) => {
 		console.log(error)
 	}
 } 
+
 
 const getProductsBySearch = async (req, res) => {
 	try {
@@ -69,18 +72,16 @@ const getProductsByFilter = async (req, res) =>{
 const getProduct = async (req, res) => {
 	try {
 		const {
-			user: { userId },
 			params: { id: productId },
 		} = req
 
 		const product = await Product.findOne({
 			_id: productId,
-			createdBy: userId,
 		})
 
 		res.status(StatusCodes.OK).json({ product })
 		if (!product) {
-			throw new NotFoundError(`No product with id ${productId}`)
+			res.status(StatusCodes.NOT_FOUND).json(new Error(`No product with id ${productId}`))
 		}
 	} catch (error) {
 		console.log(error)
@@ -113,17 +114,19 @@ const updateProduct = async (req, res) => {
 			condition === '' ||
 			price === ''
 		) {
-			throw new BadRequestError('Please fill in all fields.')
+			res.status(StatusCodes.BAD_REQUEST).json(new Error('Please fill in all fields.'))
 		}
 		const products = await Product.findByIdAndUpdate(
 			{ _id: productId, createdBy: userId },
 			req.body,
 			{ new: true, runValidators: true }
 		)
-		if (!products) {
-			throw new NotFoundError(`No product with id ${productId}`)
+		if (products){
+			res.status(StatusCodes.OK).json({ products })
 		}
-		res.status(StatusCodes.OK).json({ products })
+		if (!products) {
+			res.status(StatusCodes.NOT_FOUND).json(new Error(`No product with id ${productId}`))
+		}
 	} catch (error) {
 		console.log(error)
 	}
@@ -140,10 +143,12 @@ const deleteProduct = async (req, res) => {
 			_id: productId,
 			createdBy: userId,
 		})
-		if (!product) {
-			throw new NotFoundError(`No Product with id ${productId}`)
+		if (product){
+			res.status(StatusCodes.OK).json({ msg: 'The Product was deleted.' })
 		}
-		res.status(StatusCodes.OK).json({ msg: 'The Product was deleted.' })
+		if (!product) {
+			res.status(StatusCodes.NOT_FOUND).json(new Error(`No product with id ${productId}`))
+		}
 	} catch (error) {
 		console.log(error)
 	}
@@ -158,5 +163,5 @@ module.exports = {
 	getProduct,
 	getProductsBySearch,
 	getProductsByFilter,
-	
+
 }
