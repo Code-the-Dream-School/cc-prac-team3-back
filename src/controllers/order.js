@@ -3,11 +3,6 @@ const Order = require('../../models/Order')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
-const createOrder = async (req, res) => {
-	req.body.createdBy = req.user.userId
-	const order = await Order.create(req.body)
-	res.status(StatusCodes.CREATED).json({ order })
-
 const User = require('../../models/User')
 const Product = require('../../models/Product')
 
