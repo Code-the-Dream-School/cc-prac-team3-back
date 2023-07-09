@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
 const favicon = require('express-favicon');
 const logger = require('morgan');
 
@@ -26,7 +27,8 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler'); 
 
 // middleware
-app.use(cors());
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions)); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
