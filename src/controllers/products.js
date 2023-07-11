@@ -43,32 +43,6 @@ const getProducts = async (req, res) => {
 
 
 
-const getProductsBySearch = async (req, res) => {
-	try {
-		const req = req.body
-		const search = { $text: { $search: req } }
-
-		const projection = {
-			_id: 1,
-			productName: 1,
-			category: 1,
-			description: 1,
-			condition: 1,
-			price: 1,
-			createdBy: 1,
-			date_added: 1,
-		}
-
-		const findProducts = Product.find(search).project(projection)
-		res.status(StatusCodes.OK).json({ findProducts })
-	} catch {
-		if (!findProducts) {
-			throw new NotFoundError('No products match your search')
-		}
-	}
-}
-
-
 const getProduct = async (req, res) => {
 	try {
 		const {
@@ -161,8 +135,6 @@ module.exports = {
 	getProducts, 
 	updateProduct,
 	getProduct,
-
-	getProductsBySearch,
 	
 
 }
